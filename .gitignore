@@ -1,0 +1,36 @@
+# Jetbrains
+/.idea
+
+# Node modules
+/node_modules
+
+# Next.js build output
+/.next
+
+# Production build output
+/out
+
+# Log files
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# dotenv environment variables file
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE/editor config files
+.vscode
+.idea
+
+# Mac system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Package-lock and yarn lock files (if you're using Yarn)
+package-lock.json
+yarn.lock
