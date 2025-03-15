@@ -8,9 +8,21 @@ export interface TaxResults {
   netSalary: number
   pfDeduction: number
   inHandSalary: number
+  inHandSalaryPerMonth: number
 }
 
-export function calculateTax(grossSalary: number): TaxResults {
+export function calculateTax(grossSalary: number): {
+  grossSalary: number;
+  standardDeduction: number;
+  taxableIncome: number;
+  incomeTax: number;
+  cess: number;
+  totalTax: number;
+  netSalary: number;
+  pfDeduction: number;
+  inHandSalary: number;
+  inHandSalaryPerMonth: number
+} {
   // Constants
   const STANDARD_DEDUCTION = 75000
   const PF_RATE = 0.06
@@ -43,6 +55,8 @@ export function calculateTax(grossSalary: number): TaxResults {
   // Calculate in-hand salary (post-tax and PF)
   const inHandSalary = netSalary - pfDeduction
 
+  const inHandSalaryPerMonth = netSalary/12
+
   return {
     grossSalary,
     standardDeduction: STANDARD_DEDUCTION,
@@ -53,6 +67,7 @@ export function calculateTax(grossSalary: number): TaxResults {
     netSalary,
     pfDeduction,
     inHandSalary,
+    inHandSalaryPerMonth
   }
 }
 

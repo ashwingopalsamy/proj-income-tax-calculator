@@ -18,12 +18,13 @@ export default function TaxResultsTable({ results }: TaxResultsTableProps) {
     { label: "Net Salary (Post Tax)", value: results.netSalary },
     { label: "Employee PF Deduction (6%)", value: results.pfDeduction },
     { label: "In-hand Salary", value: results.inHandSalary, isHighlighted: true },
+    { label: "In-hand Salary Per Month", value: results.inHandSalaryPerMonth, isHighlighted: true },
   ]
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Tax Calculation Results</CardTitle>
+        <CardTitle>Salary Breakdown</CardTitle>
         <CardDescription>Breakdown of your tax liability and take-home salary</CardDescription>
       </CardHeader>
       <CardContent>
@@ -32,7 +33,7 @@ export default function TaxResultsTable({ results }: TaxResultsTableProps) {
             <TableRow>
               <TableHead className="w-[50%]">Component</TableHead>
               <TableHead>Amount (₹)</TableHead>
-              <TableHead className="text-right">LPA</TableHead>
+              <TableHead className="text-right">In Lakhs Per Annum</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

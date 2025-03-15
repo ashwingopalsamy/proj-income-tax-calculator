@@ -17,6 +17,6 @@ export function formatCurrency(amount: number): string {
  */
 export function formatLPA(amount: number): string {
   const lakhs = amount / 100000
-  return `${lakhs.toFixed(2)} LPA`
+  return `${lakhs.toFixed(2)} Lakhs Per Annum`
 }
 

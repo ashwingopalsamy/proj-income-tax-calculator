@@ -34,7 +34,7 @@ export default function TaxCalculator() {
     <div className="space-y-8">
       <Card>
         <CardHeader>
-          <CardTitle>Enter Your Details</CardTitle>
+          <CardTitle>Salary Details</CardTitle>
           <CardDescription>Provide your annual gross salary to calculate tax liability</CardDescription>
         </CardHeader>
         <CardContent>
