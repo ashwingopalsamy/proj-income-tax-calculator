@@ -12,6 +12,11 @@ export function formatCurrency(amount: number): string {
   return formatter.format(amount)
 }
 
+export function formatCurrencyToINR(amount: number): string {
+  return `INR ${amount.toLocaleString("en-IN")}`;
+}
+
+
 /**
  * Format a number as Lakhs Per Annum (LPA)
  */

@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --border-radius: 8px;
+}
+
+.card, .input, .button, .chart-container {
+  border-radius: var(--border-radius);
+}
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
