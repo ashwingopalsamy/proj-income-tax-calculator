@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -16,7 +15,9 @@ import TaxReportDownload from "@/components/tax-report-download"
 import { calculateTax } from "@/lib/tax-calculations"
 import { formatCurrency, formatLPA } from "@/lib/formatters"
 import { motion } from "framer-motion"
-import { IndianRupee, Calculator, BarChart2, Info, LightbulbIcon } from "lucide-react"
+import { IndianRupee, Calculator, BarChart2, Info, TrendingUp } from "lucide-react"
+import HikeImpactTable from "@/components/hike-impact-table"
+
 
 export default function TaxCalculator() {
   const [salary, setSalary] = useState<string>("")
@@ -24,9 +25,7 @@ export default function TaxCalculator() {
   const [employerPfIncluded, setEmployerPfIncluded] = useState<boolean>(false)
 
   const handleSalaryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-
-    // Allow empty input or valid numbers
+    let value = e.target.value.replace(/,/g, "") // Remove existing commas
     if (value === "" || /^\d+$/.test(value)) {
       setSalary(value)
       setError("")
@@ -35,7 +34,7 @@ export default function TaxCalculator() {
     }
   }
 
-  const salaryValue = salary ? Number.parseInt(salary) : 0
+  const salaryValue = salary ? Number(salary.replace(/,/g, "")) : 0
   const taxResults = calculateTax(salaryValue, employerPfIncluded)
 
   return (
@@ -121,7 +120,7 @@ export default function TaxCalculator() {
           </div>
 
           <Tabs defaultValue="results" className="w-full">
-            <TabsList className="grid grid-cols-3 mb-6">
+            <TabsList className="grid grid-cols-4 mb-6">
               <TabsTrigger value="results" className="flex items-center gap-2">
                 <Calculator className="h-4 w-4" />
                 <span className="hidden sm:inline">Salary Breakdown</span>
@@ -133,6 +132,10 @@ export default function TaxCalculator() {
               <TabsTrigger value="info" className="flex items-center gap-2">
                 <Info className="h-4 w-4" />
                 <span className="hidden sm:inline">Tax Slabs</span>
+              </TabsTrigger>
+              <TabsTrigger value="hike" className="flex items-center gap-2">
+                <TrendingUp className="h-4 w-4" />
+                <span className="hidden sm:inline">Hike Predictor</span>
               </TabsTrigger>
             </TabsList>
 
@@ -154,6 +157,12 @@ export default function TaxCalculator() {
 
             <TabsContent value="info" className="mt-0">
               <TaxSlabExplainer />
+            </TabsContent>
+
+            <TabsContent value="hike">
+              <div className="mt-6">
+                <HikeImpactTable baseSalary={salaryValue} employerPfIncluded={employerPfIncluded} />
+              </div>
             </TabsContent>
 
           </Tabs>
