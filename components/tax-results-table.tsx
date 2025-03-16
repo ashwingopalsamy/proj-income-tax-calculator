@@ -5,10 +5,12 @@ import { formatCurrency, formatLPA } from "@/lib/formatters"
 
 interface TaxResultsTableProps {
   results: TaxResults
+  employerPfIncluded?: boolean
 }
 
-export default function TaxResultsTable({ results }: TaxResultsTableProps) {
-  const rows = [
+export default function TaxResultsTable({ results, employerPfIncluded = false }: TaxResultsTableProps) {
+  // Base rows that are always shown
+  const baseRows = [
     { label: "Gross Salary", value: results.grossSalary },
     { label: "Standard Deduction", value: results.standardDeduction },
     { label: "Taxable Income", value: results.taxableIncome },
@@ -16,39 +18,62 @@ export default function TaxResultsTable({ results }: TaxResultsTableProps) {
     { label: "Health & Education CESS (4%)", value: results.cess },
     { label: "Total Tax", value: results.totalTax, isHighlighted: true },
     { label: "Net Salary (Post Tax)", value: results.netSalary },
-    { label: "Employee PF Deduction (6%)", value: results.pfDeduction },
-    { label: "In-hand Salary", value: results.inHandSalary, isHighlighted: true },
-    { label: "In-hand Salary Per Month", value: results.inHandSalaryPerMonth, isHighlighted: true },
   ]
 
+  // PF related rows
+  const pfRows = employerPfIncluded
+    ? [
+        { label: "Employee PF Deduction (6%)", value: results.pfDeduction },
+        { label: "Employer PF Deduction (6%)", value: results.employerPf },
+        { label: "Total PF Deduction (12%)", value: results.pfDeduction * 2, isHighlighted: true },
+      ]
+    : [{ label: "Employee PF Deduction (6%)", value: results.pfDeduction }]
+
+  // Final row
+  const finalRow = [{ label: "In-hand Salary", value: results.inHandSalary, isHighlighted: true, isFinal: true }]
+
+  // Combine all rows
+  const rows = [...baseRows, ...pfRows, ...finalRow]
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Salary Breakdown</CardTitle>
-        <CardDescription>Breakdown of your tax liability and take-home salary</CardDescription>
+    <Card className="border border-border/40 shadow-sm">
+      <CardHeader className="pb-4">
+        <CardTitle className="text-xl font-semibold tracking-tight">Tax Calculation Results</CardTitle>
+        <CardDescription>
+          {employerPfIncluded
+            ? "Breakdown with Employer PF included in CTC (12% total PF deduction)"
+            : "Breakdown with standard 6% PF deduction"}
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[50%]">Component</TableHead>
-              <TableHead>Amount (₹)</TableHead>
-              <TableHead className="text-right">In Lakhs Per Annum</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.label}
-                className={row.isHighlighted ? "font-medium bg-slate-50 dark:bg-slate-800/50" : ""}
-              >
-                <TableCell>{row.label}</TableCell>
-                <TableCell>{formatCurrency(row.value)}</TableCell>
-                <TableCell className="text-right">{formatLPA(row.value)}</TableCell>
+        <div className="rounded-lg border border-border/50 overflow-hidden">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted/50 hover:bg-muted/50">
+                <TableHead className="w-[50%] font-medium">Component</TableHead>
+                <TableHead className="font-medium">Amount (₹)</TableHead>
+                <TableHead className="text-right font-medium">LPA</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {rows.map((row, index) => (
+                <TableRow
+                  key={row.label}
+                  className={`
+                    ${row.isHighlighted ? "font-medium bg-muted/30 dark:bg-muted/10" : ""}
+                    ${row.isFinal ? "text-primary dark:text-primary" : ""}
+                    ${index === rows.length - 1 ? "border-t-2 border-border/50" : ""}
+                    transition-colors
+                  `}
+                >
+                  <TableCell>{row.label}</TableCell>
+                  <TableCell>{formatCurrency(row.value)}</TableCell>
+                  <TableCell className="text-right">{formatLPA(row.value)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </CardContent>
     </Card>
   )

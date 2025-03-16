@@ -6,27 +6,23 @@ export interface TaxResults {
   cess: number
   totalTax: number
   netSalary: number
-  pfDeduction: number
+  employeePF: number
+  employerPF: number
   inHandSalary: number
   inHandSalaryPerMonth: number
 }
 
-export function calculateTax(grossSalary: number): {
-  grossSalary: number;
-  standardDeduction: number;
-  taxableIncome: number;
-  incomeTax: number;
-  cess: number;
-  totalTax: number;
-  netSalary: number;
-  pfDeduction: number;
-  inHandSalary: number;
-  inHandSalaryPerMonth: number
-} {
+export function calculateTax(grossSalary: number, employerPfIncluded = false): TaxResults {
   // Constants
   const STANDARD_DEDUCTION = 75000
   const PF_RATE = 0.06
   const CESS_RATE = 0.04
+
+  // Calculate PF deduction
+  const employeePF = grossSalary * PF_RATE
+
+  // Calculate employer PF (same as employee PF)
+  const employerPF = grossSalary * PF_RATE
 
   // Calculate taxable income
   const taxableIncome = Math.max(0, grossSalary - STANDARD_DEDUCTION)
@@ -46,16 +42,14 @@ export function calculateTax(grossSalary: number): {
   // Calculate total tax
   const totalTax = incomeTax + cess
 
-  // Calculate PF deduction
-  const pfDeduction = grossSalary * PF_RATE
-
   // Calculate net salary (post-tax)
   const netSalary = grossSalary - totalTax
 
   // Calculate in-hand salary (post-tax and PF)
-  const inHandSalary = netSalary - pfDeduction
+  // If employer PF is included in CTC, deduct both employee and employer PF
+  const inHandSalary = employerPfIncluded ? netSalary - employeePF * 2 : netSalary - employeePF
 
-  const inHandSalaryPerMonth = netSalary/12
+  const inHandSalaryPerMonth = inHandSalary/12
 
   return {
     grossSalary,
@@ -65,9 +59,10 @@ export function calculateTax(grossSalary: number): {
     cess,
     totalTax,
     netSalary,
-    pfDeduction,
+    employeePF,
+    employerPF,
     inHandSalary,
-    inHandSalaryPerMonth
+    inHandSalaryPerMonth,
   }
 }
 
