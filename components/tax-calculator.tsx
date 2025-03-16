@@ -42,7 +42,7 @@ export default function TaxCalculator() {
     <div className="space-y-8">
       <Card className="border border-border/40 shadow-sm">
         <CardHeader className="pb-4">
-          <CardTitle className="text-xl font-semibold tracking-tight">Enter Your Details</CardTitle>
+          <CardTitle className="text-xl font-semibold tracking-tight">Salary Details</CardTitle>
           <CardDescription>Provide your annual gross salary to calculate tax liability</CardDescription>
         </CardHeader>
         <CardContent>
@@ -124,7 +124,7 @@ export default function TaxCalculator() {
             <TabsList className="grid grid-cols-3 mb-6">
               <TabsTrigger value="results" className="flex items-center gap-2">
                 <Calculator className="h-4 w-4" />
-                <span className="hidden sm:inline">Tax Results</span>
+                <span className="hidden sm:inline">Salary Breakdown</span>
               </TabsTrigger>
               <TabsTrigger value="breakdown" className="flex items-center gap-2">
                 <BarChart2 className="h-4 w-4" />

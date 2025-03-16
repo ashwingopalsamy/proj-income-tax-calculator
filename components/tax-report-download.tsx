@@ -45,8 +45,8 @@ Total Tax Liability: ${formatCurrency(results.totalTax)}
 
 DEDUCTIONS
 ---------
-Employee PF Deduction (6%): ${formatCurrency(results.pfDeduction)}
-${employerPfIncluded ? `Employer PF Deduction (6%): ${formatCurrency(results.employerPf)}` : ""}
+Employee PF Deduction (6%): ${formatCurrency(results.employeePF)}
+${employerPfIncluded ? `Employer PF Deduction (6%): ${formatCurrency(results.employeePF)}` : ""}
 
 FINAL CALCULATION
 ---------------

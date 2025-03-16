@@ -59,7 +59,7 @@ export default function TaxBreakdownChart({ results, employerPfIncluded = false 
     // Add Employee PF deduction
     breakdown.push({
       name: "Employee PF (6%)",
-      amount: results.pfDeduction,
+      amount: results.employeePF,
       category: "pf",
     })
 
@@ -67,7 +67,7 @@ export default function TaxBreakdownChart({ results, employerPfIncluded = false 
     if (employerPfIncluded) {
       breakdown.push({
         name: "Employer PF (6%)",
-        amount: results.employerPf,
+        amount: results.employeePF,
         category: "pf",
       })
     }

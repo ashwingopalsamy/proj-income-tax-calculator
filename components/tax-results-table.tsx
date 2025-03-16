@@ -23,11 +23,11 @@ export default function TaxResultsTable({ results, employerPfIncluded = false }:
   // PF related rows
   const pfRows = employerPfIncluded
     ? [
-        { label: "Employee PF Deduction (6%)", value: results.pfDeduction },
-        { label: "Employer PF Deduction (6%)", value: results.employerPf },
-        { label: "Total PF Deduction (12%)", value: results.pfDeduction * 2, isHighlighted: true },
+        { label: "Employee PF Deduction (6%)", value: results.employeePF },
+        { label: "Employer PF Deduction (6%)", value: results.employeePF },
+        { label: "Total PF Deduction (12%)", value: results.employeePF * 2, isHighlighted: true },
       ]
-    : [{ label: "Employee PF Deduction (6%)", value: results.pfDeduction }]
+    : [{ label: "Employee PF Deduction (6%)", value: results.employeePF }]
 
   // Final row
   const finalRow = [{ label: "In-hand Salary", value: results.inHandSalary, isHighlighted: true, isFinal: true }]
@@ -38,7 +38,7 @@ export default function TaxResultsTable({ results, employerPfIncluded = false }:
   return (
     <Card className="border border-border/40 shadow-sm">
       <CardHeader className="pb-4">
-        <CardTitle className="text-xl font-semibold tracking-tight">Tax Calculation Results</CardTitle>
+        <CardTitle className="text-xl font-semibold tracking-tight">Salary Breakdown</CardTitle>
         <CardDescription>
           {employerPfIncluded
             ? "Breakdown with Employer PF included in CTC (12% total PF deduction)"
@@ -52,7 +52,7 @@ export default function TaxResultsTable({ results, employerPfIncluded = false }:
               <TableRow className="bg-muted/50 hover:bg-muted/50">
                 <TableHead className="w-[50%] font-medium">Component</TableHead>
                 <TableHead className="font-medium">Amount (₹)</TableHead>
-                <TableHead className="text-right font-medium">LPA</TableHead>
+                <TableHead className="text-right font-medium">Lakhs Per Annum</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
