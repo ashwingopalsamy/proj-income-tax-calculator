@@ -30,7 +30,7 @@ export default function TaxResultsTable({ results, employerPfIncluded = false }:
     : [{ label: "Employee PF Deduction (6%)", value: results.employeePF }]
 
   // Final row
-  const finalRow = [{ label: "In-hand Salary", value: results.inHandSalary, isHighlighted: true, isFinal: true }]
+  const finalRow = [{ label: "In-hand Salary Per Month", value: results.inHandSalaryPerMonth, isHighlighted: true, isFinal: true },{ label: "In-hand Salary Per Year", value: results.inHandSalary, isHighlighted: true, isFinal: true }]
 
   // Combine all rows
   const rows = [...baseRows, ...pfRows, ...finalRow]
