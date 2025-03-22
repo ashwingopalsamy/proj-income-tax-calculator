@@ -10,6 +10,7 @@ import { Inter } from "next/font/google"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://simpleincometax.vercel.app"),
     title: "Indian Salaried Income Tax Calculator",
     description: "Calculate your income tax, deductions, and in-hand salary as per announced New Tax Regime 2025 - 2026.",
     keywords: [
@@ -44,15 +45,9 @@ export const metadata: Metadata = {
         title: "Indian Salaried Income Tax Calculator",
         description: "Calculate your income tax, deductions, and in-hand salary as per announced New Tax Regime 2025 - 2026.",
         images: ["/banner.jpg"],
-    },
-    robots: {
-       index: true,
-       follow: true,
-       "max-snippet": -1,
-       "max-image-preview": "large",
-       "max-video-preview": -1,
-    },
+    }
 };
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
