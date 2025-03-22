@@ -1,3 +1,4 @@
+import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { TrendingUp } from "lucide-react"
@@ -10,7 +11,9 @@ interface HikeImpactTableProps {
 }
 
 export default function HikeImpactTable({ baseSalary, employerPfIncluded }: HikeImpactTableProps) {
-    const hikePercentages = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+    const hikePercentages = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+    const currentInhandSalary = calculateTax(baseSalary, employerPfIncluded);
+    const currentMonthlyInhand = currentInhandSalary.inHandSalaryPerMonth;
 
     return (
         <Card className="border border-border/40 shadow-sm">
@@ -19,7 +22,12 @@ export default function HikeImpactTable({ baseSalary, employerPfIncluded }: Hike
                     <TrendingUp className="h-5 w-5 text-primary" />
                     <CardTitle className="text-xl font-semibold tracking-tight">Hike Impact Table</CardTitle>
                 </div>
-                <CardDescription>See how different hike percentages impact your in-hand salary</CardDescription>
+                <CardDescription>
+                    See how different hike percentages impact your in-hand salary.
+                </CardDescription>
+                <CardDescription>
+                    Current Monthly In-Hand: {formatCurrency(currentMonthlyInhand)}
+                </CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="rounded-lg border border-border/50 overflow-hidden">
@@ -29,20 +37,27 @@ export default function HikeImpactTable({ baseSalary, employerPfIncluded }: Hike
                                 <TableHead className="font-medium">Hike %</TableHead>
                                 <TableHead className="font-medium">New Gross Salary</TableHead>
                                 <TableHead className="font-medium">New Monthly In-Hand</TableHead>
+                                <TableHead className="font-medium">Monthly Increase</TableHead>
+                                <TableHead className="font-medium">Yearly Increase</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {hikePercentages.map((hike) => {
-                                const newGrossSalary = baseSalary * (1 + hike / 100)
-                                const newTaxResults = calculateTax(newGrossSalary, employerPfIncluded)
+                                const newGrossSalary = baseSalary * (1 + hike / 100);
+                                const newTaxResults = calculateTax(newGrossSalary, employerPfIncluded);
+                                const newMonthlyInhand = newTaxResults.inHandSalaryPerMonth;
+                                const monthlyIncrease = newMonthlyInhand - currentMonthlyInhand;
+                                const yearlyIncrease = monthlyIncrease * 12;
 
                                 return (
                                     <TableRow key={hike}>
                                         <TableCell>{hike}%</TableCell>
                                         <TableCell>{formatCurrency(newGrossSalary)}</TableCell>
-                                        <TableCell>{formatCurrency(newTaxResults.inHandSalaryPerMonth)}</TableCell>
+                                        <TableCell>{formatCurrency(newMonthlyInhand)}</TableCell>
+                                        <TableCell>{formatCurrency(monthlyIncrease)}</TableCell>
+                                        <TableCell>{formatCurrency(yearlyIncrease)}</TableCell>
                                     </TableRow>
-                                )
+                                );
                             })}
                         </TableBody>
                     </Table>
@@ -55,6 +70,5 @@ export default function HikeImpactTable({ baseSalary, employerPfIncluded }: Hike
                 </div>
             </CardContent>
         </Card>
-    )
+    );
 }
-

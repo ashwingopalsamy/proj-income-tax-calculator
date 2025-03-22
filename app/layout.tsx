@@ -12,6 +12,16 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
     title: "Indian Salaried Income Tax Calculator",
     description: "Calculate your income tax, deductions, and in-hand salary as per announced New Tax Regime 2025 - 2026.",
+    keywords: [
+        "Indian Income Tax Calculator",
+        "Salaried Tax Calculator",
+        "New Tax Regime Calculator",
+        "Income Tax New Regime",
+        "Tax Calculator Without Deductions",
+        "2024-25 Tax Calculator",
+        "India Tax Calculator",
+        "Income Tax for Salaried",
+    ],
     creator: "Ashwin Gopalsamy",
     category: "Financial Tool",
     openGraph: {
@@ -35,7 +45,14 @@ export const metadata: Metadata = {
         description: "Calculate your income tax, deductions, and in-hand salary as per announced New Tax Regime 2025 - 2026.",
         images: ["/banner.jpg"],
     },
-}
+    robots: {
+       index: true,
+       follow: true,
+       "max-snippet": -1,
+       "max-image-preview": "large",
+       "max-video-preview": -1,
+    },
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

@@ -5,10 +5,11 @@ import { formatCurrency, formatLPA } from "@/lib/formatters"
 
 interface TaxResultsTableProps {
   results: TaxResults
+    gratuityIncluded?: boolean
   employerPfIncluded?: boolean
 }
 
-export default function TaxResultsTable({ results, employerPfIncluded = false }: TaxResultsTableProps) {
+export default function TaxResultsTable({ results, gratuityIncluded = false, employerPfIncluded = false }: TaxResultsTableProps) {
   // Base rows that are always shown
   const baseRows = [
     { label: "Gross Salary", value: results.grossSalary },
@@ -29,11 +30,18 @@ export default function TaxResultsTable({ results, employerPfIncluded = false }:
       ]
     : [{ label: "Employee PF Deduction (6%)", value: results.employeePF }]
 
+  const gratuityRow = gratuityIncluded
+      ? [
+        { label: "Gratuity Deduction (4.81%)", value: results.gratuityAmount, isHighlighted: true },
+      ]
+      : ""
+
+
   // Final row
   const finalRow = [{ label: "In-hand Salary Per Month", value: results.inHandSalaryPerMonth, isHighlighted: true, isFinal: true },{ label: "In-hand Salary Per Year", value: results.inHandSalary, isHighlighted: true, isFinal: true }]
 
   // Combine all rows
-  const rows = [...baseRows, ...pfRows, ...finalRow]
+  const rows = [...baseRows, ...pfRows, ...gratuityRow,...finalRow]
 
   return (
     <Card className="border border-border/40 shadow-sm">

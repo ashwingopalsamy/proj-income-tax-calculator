@@ -83,7 +83,7 @@ export default function SalaryComparison({ employerPfIncluded }: { employerPfInc
         <CardHeader className="pb-4">
           <div className="flex items-center gap-2">
             <LineChart className="h-5 w-5 text-primary" />
-            <CardTitle className="text-xl font-semibold tracking-tight">Salary Comparison</CardTitle>
+            <CardTitle className="text-xl font-semibold tracking-tight">Compare Salaries</CardTitle>
           </div>
           <CardDescription>Compare tax calculations for different salary scenarios</CardDescription>
         </CardHeader>
